@@ -22,7 +22,8 @@ Mục tiêu của dự án là xây dựng một pipeline RAG nhằm:
 ## 2. Approach Overview
 
 ```
-<img width="1774" height="887" alt="image" src="https://github.com/user-attachments/assets/f3f89897-a516-44f6-901b-67e2b6350ebf" />
+<img width="1774" height="887" alt="image" src="https://github.com/user-attachments/assets/398f1695-d27d-45e6-bf7d-d499f0645511" />
+
 
 ```
 
