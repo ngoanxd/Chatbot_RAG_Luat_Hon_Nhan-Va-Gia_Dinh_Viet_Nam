@@ -1,0 +1,16 @@
+langchain-core
+langchain-community
+langchain-ollama
+
+faiss-cpu
+rank-bm25
+
+sentence-transformers
+transformers
+torch
+
+numpy
+pandas
+tqdm
+scikit-learn
+python-dotenv
