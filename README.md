@@ -22,21 +22,8 @@ Mục tiêu của dự án là xây dựng một pipeline RAG nhằm:
 ## 2. Approach Overview
 
 ```
-User Query
-   ↓
-Query Rewriting
-   ↓
-Semantic Cache
-   ↓
-Hybrid Retrieval (BM25 + Dense)
-   ↓
-Cross-Encoder Reranking
-   ↓
-Context Expansion
-   ↓
-Context Validation
-   ↓
-Answer Generation
+<img width="1774" height="887" alt="image" src="https://github.com/user-attachments/assets/f3f89897-a516-44f6-901b-67e2b6350ebf" />
+
 ```
 
 ---
@@ -190,6 +177,7 @@ Các metric đề xuất:
 │   └── json_utils.py
 │
 ├── build_index.py               # Script build vector DB
+├── requirements.txt 
 │
 ├── config.py                    # Cấu hình hệ thống
 │
