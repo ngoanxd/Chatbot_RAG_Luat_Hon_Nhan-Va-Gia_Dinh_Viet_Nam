@@ -162,13 +162,38 @@ Các metric đề xuất:
 
 ```
 .
+.
 ├── data/
-├── retriever/
-├── reranker/
-├── cache/
-├── llm/
-├── pipeline/
-└── main.py
+│   └── loader.py                 # Load dữ liệu (PDF, txt luật)
+│
+├── retriever/                   # Truy xuất (BM25, FAISS)
+│   ├── bm25.py
+│   ├── faiss_db.py
+│   └── hybrid_search.py
+│
+├── luat_hon_nhan/               # Dữ liệu luật
+│
+├── cache/                       # Semantic cache
+│   ├── cache_semantic.py
+│   └── cache_semantic.json
+│
+├── llm/                         # Xử lý LLM
+│   ├── analyze.py
+│   ├── model.py
+│   └── rewrite.py
+│
+├── faiss_store/                 # Vector DB
+│   ├── index.faiss
+│   └── index.pkl
+│
+├── utils/                       # Helper functions
+│   └── json_utils.py
+│
+├── build_index.py               # Script build vector DB
+│
+├── config.py                    # Cấu hình hệ thống
+│
+└── main.py                      # Entry point chính
 ```
 
 ---
