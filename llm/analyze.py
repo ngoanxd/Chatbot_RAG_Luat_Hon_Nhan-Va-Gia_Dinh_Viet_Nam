@@ -1,7 +1,6 @@
 from utils.json_utils import safe_json_parse
-from llm.model import llm
-# 🔹 analyze (prompt viết cứng cho mistral)
-def analyze_context(query, context):
+# 🔹 analyze (prompt)
+def analyze_context(query, context,llm):
     result = llm.invoke(f"""
     Bạn là chuyên gia pháp luật.
 
