@@ -1,19 +1,22 @@
+# 🔹 RAG Pipeline with Semantic Cache & Query Rewriting
 
+## 📌 Giới thiệu
+Dự án xây dựng hệ thống **Retrieval-Augmented Generation (RAG)** nhằm nâng cao độ chính xác trong bài toán hỏi đáp, đặc biệt trong miền **văn bản pháp luật** – nơi có mối liên kết ngữ cảnh phức tạp giữa các điều khoản.
 
-🔹 RAG Pipeline with Semantic Cache & Query Rewriting
-📌 Giới thiệu
+---
 
-Dự án xây dựng hệ thống Retrieval-Augmented Generation (RAG) nhằm nâng cao độ chính xác trong bài toán hỏi đáp, đặc biệt trong miền văn bản pháp luật – nơi có tính liên kết ngữ cảnh cao giữa các điều khoản.
+## ⚙️ Thành phần hệ thống
+- **Query Rewriting (LLM)** → Chuẩn hóa truy vấn  
+- **Semantic Cache** → Tăng tốc phản hồi  
+- **Hybrid Retrieval (BM25 + Embedding)** → Tăng *recall*  
+- **Reranking (Cross-Encoder)** → Tăng *precision*  
+- **Context Validation Loop** → Đảm bảo đủ ngữ cảnh  
 
-Hệ thống kết hợp nhiều thành phần:
+---
 
-Query Rewriting (LLM) → chuẩn hóa truy vấn
-Semantic Cache → tăng tốc phản hồi
-Hybrid Retrieval (BM25 + Embedding) → tăng recall
-Reranking (Cross-Encoder) → tăng precision
-Context Validation Loop → đảm bảo đủ ngữ cảnh trước khi trả lời
-🔹 Tổng quan kiến trúc
-User Query 
+## 🔹 Tổng quan kiến trúc
+```
+User Query
    ↓
 Query Rewriting (LLM)
    ↓
@@ -28,179 +31,183 @@ Context Expansion (Legal Linking)
 Context Validation (LLM)
    ↓
 Answer Generation (LLM)
-🔹 1. Query Rewriting
-Mục tiêu
+```
 
-Chuẩn hóa câu hỏi người dùng nhằm tối ưu cho quá trình truy xuất.
+---
 
-Phương pháp
+## 🔹 1. Query Rewriting
+### 🎯 Mục tiêu
+Chuẩn hóa câu hỏi người dùng để tối ưu quá trình truy xuất.
 
-Sử dụng LLM để biến đổi:
+### ⚙️ Phương pháp
+```
+q → q'
+```
 
-q→q
-′
-Lợi ích
-Tăng khả năng match của BM25
-Giảm ambiguity (mơ hồ ngữ nghĩa)
-Chuẩn hóa câu hỏi về dạng rõ ràng hơn
-🔹 2. Semantic Cache
-Cơ chế
+### ✅ Lợi ích
+- Tăng khả năng match của **BM25**  
+- Giảm ambiguity (mơ hồ ngữ nghĩa)  
+- Chuẩn hóa câu hỏi rõ ràng hơn  
 
+---
+
+## 🔹 2. Semantic Cache
+### ⚙️ Cơ chế hoạt động
 Hệ thống lưu:
-
-Query trước đó q
-i
-	​
-
-Embedding e
-i
-	​
-
-Answer a
-i
-	​
-
+- Query trước đó: `q_i`  
+- Embedding: `e_i`  
+- Answer: `a_i`  
 
 Khi có query mới:
+```
+e = Encoder(q')
+sim(e, e_i) = cosine(e, e_i)
+```
 
-e=Encoder(q
-′
-)
+### 🎯 Quyết định
+- Nếu:
+```
+max(sim) ≥ τ
+```
+→ **Cache Hit** → trả lời ngay  
 
-So sánh:
+- Ngược lại → **Cache Miss** → chuyển sang RAG  
 
-sim(e,e
-i
-	​
+### ✅ Lợi ích
+- Giảm latency  
+- Giảm chi phí LLM  
+- Tái sử dụng tri thức  
 
-)=cosine(e,e
-i
-	​
+---
 
-)
-Quyết định
-Nếu:
-max(sim)≥τ
+## 🔹 3. Hybrid Retrieval
+### ⚙️ Thành phần
 
-→ Cache Hit → trả lời ngay
+**BM25 (Sparse Retrieval)**
+- Dựa trên từ khóa  
+- Hiệu quả với văn bản pháp luật  
 
-Ngược lại:
-→ Cache Miss → chuyển sang RAG
-Lợi ích
-Giảm latency
-Giảm chi phí LLM
-Tái sử dụng tri thức đã có
-🔹 3. Hybrid Retrieval
-Thành phần
-BM25 (Sparse Retrieval)
-Dựa trên từ khóa
-Hiệu quả với văn bản pháp luật
-Embedding Search (Bi-Encoder)
-Dựa trên vector ngữ nghĩa
-Bắt được semantic similarity
-Kết quả
-Candidates={d
-1
-	​
+**Embedding Search (Bi-Encoder)**
+- Dựa trên vector ngữ nghĩa  
+- Bắt semantic similarity  
 
-,d
-2
-	​
+### 📌 Kết quả
+```
+Candidates = {d1, d2, ..., dn}
+```
 
-,...,d
-n
-	​
+---
 
-}
-🔹 4. Reranking (Cross-Encoder)
-
-Các candidate được đánh giá lại bằng mô hình cross-encoder:
-
+## 🔹 4. Reranking (Cross-Encoder)
+### ⚙️ Cách hoạt động
+```
 Input: [CLS] query [SEP] document [SEP]
+```
 
-Ví dụ mô hình: BAAI/bge-reranker-v2-m3
+### 📌 Kết quả
+```
+score_i = f(q', d_i)
+```
+→ Chọn **Top-K chunk quan trọng nhất**
 
-Kết quả
-score
-i
-	​
+---
 
-=f(q
-′
-,d
-i
-	​
+## 🔹 5. Context Expansion (Pháp luật)
+### 🎯 Vấn đề
+- Các điều luật có liên kết với nhau  
 
-)
+### ⚙️ Giải pháp
+- Trích xuất các điều liên quan từ Top-K  
+- Mở rộng context  
 
-→ Chọn Top-K chunk quan trọng nhất
+### ✅ Lợi ích
+- Tăng độ đầy đủ ngữ cảnh  
+- Giảm sai sót  
 
-🔹 5. Context Expansion (Pháp luật)
+---
 
-Do văn bản luật có tính liên kết:
+## 🔹 6. Context Validation Loop
+### ⚙️ Cơ chế
+LLM kiểm tra:
+> Context đã đủ để trả lời chưa?
 
-Một điều khoản thường liên quan điều khác
-→ Hệ thống mở rộng context bằng cách:
-Trích xuất các điều liên quan từ Top-K
-Kết hợp thành context hoàn chỉnh
-🔹 6. Context Validation Loop
+### 🔁 Nếu chưa đủ
+→ Hỏi lại người dùng (clarification)
 
-LLM đánh giá:
+### ⚠️ Giới hạn
+- Tối đa **3 lượt hỏi**  
+- Tránh loop vô hạn  
 
-Context đã đủ để trả lời chưa?
-Nếu chưa đủ
+---
 
-→ Sinh câu hỏi làm rõ (clarification)
-
-Giới hạn
-Tối đa 3 lượt hỏi
-→ Tránh vòng lặp vô hạn
-🔹 7. Answer Generation
-
-Khi đủ ngữ cảnh:
-
-(q
-′
-,Context)→LLM→Answer
+## 🔹 7. Answer Generation
+```
+(q', Context) → LLM → Answer
+```
 
 → Sinh câu trả lời cuối cùng
 
-🔹 So sánh Bi-Encoder vs Cross-Encoder
-Bi-Encoder (Search Embedding)
+---
+
+## 🔹 So sánh Bi-Encoder vs Cross-Encoder
+
+### 🔸 Bi-Encoder (Search Embedding)
+```
 q_vec = Encoder(query)
 d_vec = Encoder(document)
 score = cosine_similarity(q_vec, d_vec)
-Ưu điểm
-Tốc độ nhanh
-Có thể pre-compute
-Phù hợp retrieval lớn
-Hạn chế
-Không có tương tác trực tiếp giữa query và document
-Dễ sai ngữ cảnh
-Cross-Encoder (Reranker)
+```
+
+#### ✅ Ưu điểm
+- Nhanh  
+- Pre-compute được  
+- Scale tốt  
+
+#### ❌ Hạn chế
+- Không có tương tác trực tiếp  
+- Dễ sai ngữ cảnh  
+
+---
+
+### 🔸 Cross-Encoder (Reranker)
+```
 Input: [CLS] query [SEP] document [SEP]
 score = Transformer(query ⊕ document)
-Ưu điểm
-Hiểu tương tác token-level
-Độ chính xác cao
-Hạn chế
-Chậm
-Không scale tốt
-🔴 Vì sao Cross-Encoder chính xác hơn?
-1. Attention toàn cục
-Token query ↔ token document tương tác trực tiếp
-2. Hiểu ngữ nghĩa sâu
-Nhận diện synonym, context, logic
-3. Học trực tiếp bài toán ranking
-Training trên (query, doc, relevance)
-🔹 Kết hợp hiệu quả
-Bi-Encoder → Recall cao (lọc nhanh)
+```
+
+#### ✅ Ưu điểm
+- Hiểu tương tác token-level  
+- Độ chính xác cao  
+
+#### ❌ Hạn chế
+- Chậm  
+- Không scale tốt  
+
+---
+
+## 🔴 Vì sao Cross-Encoder chính xác hơn?
+- **Attention toàn cục** → Query ↔ Document tương tác trực tiếp  
+- **Hiểu ngữ nghĩa sâu** → Synonym, context, logic  
+- **Tối ưu trực tiếp cho ranking**:
+```
+(query, document, relevance)
+```
+
+---
+
+## 🔹 Kết hợp hiệu quả
+```
+Bi-Encoder   → Recall cao (lọc nhanh)
 Cross-Encoder → Precision cao (xếp hạng lại)
-🔹 Sơ đồ chi tiết toàn pipeline
+```
+
+---
+
+## 🔹 Pipeline chi tiết
+```
                  ┌────────────────────┐
                  │   User Question    │
                  └─────────┬──────────┘
-                           │
                            ▼
                 ┌────────────────────┐
                 │ Query Rewriting    │
@@ -215,50 +222,40 @@ Cross-Encoder → Precision cao (xếp hạng lại)
    Cache Hit                       Cache Miss
         │                               │
         ▼                               ▼
-  ┌────────────┐           ┌────────────────────────┐
-  │  Answer    │           │ Hybrid Retrieval       │
-  └────────────┘           └─────────┬──────────────┘
+     Answer                  Hybrid Retrieval
                                      ▼
-                          ┌────────────────────┐
-                          │ Candidate Chunks   │
-                          └─────────┬──────────┘
-                                    ▼
-                          ┌────────────────────┐
-                          │ Reranker           │
-                          └─────────┬──────────┘
-                                    ▼
-                          ┌────────────────────┐
-                          │ Top-K              │
-                          └─────────┬──────────┘
-                                    ▼
-                          ┌────────────────────┐
-                          │ Context Expansion  │
-                          └─────────┬──────────┘
-                                    ▼
-                          ┌────────────────────┐
-                          │ Context Validation │
-                          └───────┬────────────┘
-                                  │
-                 ┌────────────────┴──────────────┐
-                 │                               │
-           Not Enough                    Enough Context
-                 │                               │
-                 ▼                               ▼
-       Ask User (≤3 turns)          Answer Generation
-                 │                               │
-                 └────────────loop───────────────┘
-                                                 ▼
+                              Candidate Chunks
+                                     ▼
+                                Reranker
+                                     ▼
+                                  Top-K
+                                     ▼
+                           Context Expansion
+                                     ▼
+                           Context Validation
+                                     │
+                ┌────────────────────┴─────────────┐
+                │                                  │
+         Not Enough                         Enough Context
+                │                                  │
+                ▼                                  ▼
+         Ask User (≤3)                    Answer Generation
+                │                                  │
+                └───────────────loop───────────────┘
+                                               ▼
                                           Final Answer
-🔹 Kết luận
+```
 
-Hệ thống kết hợp:
+---
 
-Semantic Cache → tối ưu hiệu năng
-Hybrid Retrieval → tăng recall
-Cross-Encoder → tăng precision
-Validation Loop → đảm bảo tính đầy đủ ngữ cảnh
+## 🔹 Kết luận
+Hệ thống đạt được sự cân bằng giữa:
 
-→ Tạo ra một pipeline cân bằng giữa:
+- ⚡ **Efficiency (tốc độ)**  
+- 🎯 **Effectiveness (độ chính xác)**  
 
-Efficiency (tốc độ)
-Effectiveness (độ chính xác)
+Thông qua:
+- Semantic Cache → giảm latency  
+- Hybrid Retrieval → tăng recall  
+- Cross-Encoder → tăng precision  
+- Validation Loop → đảm bảo đủ ngữ cảnh  
