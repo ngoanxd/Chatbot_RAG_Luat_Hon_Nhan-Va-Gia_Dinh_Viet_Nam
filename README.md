@@ -1,4 +1,4 @@
-# 🔹 RAG Pipeline with Semantic Cache & Query Rewriting
+# Pipeline RAG đa giai đoạn cho bài toán hỏi đáp văn bản pháp luật, tập trung vào tối ưu **recall** và **precision**
 
 ## 📌 Giới thiệu
 Dự án xây dựng hệ thống **Retrieval-Augmented Generation (RAG)** nhằm nâng cao độ chính xác trong bài toán hỏi đáp, đặc biệt trong miền **văn bản pháp luật** – nơi có mối liên kết ngữ cảnh phức tạp giữa các điều khoản.
