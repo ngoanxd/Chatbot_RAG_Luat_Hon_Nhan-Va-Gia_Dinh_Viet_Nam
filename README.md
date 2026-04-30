@@ -180,6 +180,8 @@ git clone <repo>
 cd project
 pip install -r requirements.txt
 python main.py
+
+All in:(guide_run.ipynb) google colab 
 ```
 
 ---
