@@ -1,17 +1,23 @@
-import warnings
 import os
-from transformers.utils import logging
+import warnings
+import logging
 
-logging.set_verbosity_error()
+# 1. Ẩn toàn bộ thanh tiến trình (progress bar) tải model
+os.environ["HF_HUB_DISABLE_PROGRESS_BARS"] = "1"
+os.environ["TRANSFORMERS_VERBOSITY"] = "error"
 
+# 2. Ẩn các dòng chữ đỏ cảnh báo (DeprecationWarning) của LangChain
 warnings.filterwarnings("ignore")
 
-os.environ["LANGCHAIN_VERBOSE"] = "false"
-os.environ["TRANSFORMERS_VERBOSITY"] = "error"
-os.environ["HF_HUB_DISABLE_PROGRESS_BARS"] = "1"
-os.environ["HF_HUB_DISABLE_TELEMETRY"] = "1"
-os.environ["HF_HUB_DISABLE_SYMLINKS_WARNING"] = "1"
+# 3. Bắt thư viện transformers và datasets "im lặng", chỉ lên tiếng khi có lỗi sập nguồn
+logging.getLogger("transformers").setLevel(logging.ERROR)
+logging.getLogger("sentence_transformers").setLevel(logging.ERROR)
 
+try:
+    import transformers
+    transformers.logging.set_verbosity_error()
+except ImportError:
+    pass
 
 from data.loader import load_docs
 from retriever.bm25 import BM25Retriever
@@ -28,6 +34,7 @@ from config import *
 from langchain_community.embeddings import HuggingFaceEmbeddings
 
 llm = get_llm()
+
 def get_embeddings():
     return HuggingFaceEmbeddings(
         model_name=EMBED_MODEL,
