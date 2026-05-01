@@ -11,23 +11,38 @@
 
 
 ## 1. Problem Statement
+
 Bài toán hỏi đáp trong miền văn bản pháp luật gặp nhiều thách thức:
 
 - Ngôn ngữ mang tính hình thức và phức tạp  
 - Các điều khoản có liên kết chéo (cross-reference):
 
   **Điều 8. Điều kiện kết hôn**  
-  → tham chiếu tới: **Điều 5 (các trường hợp cấm kết hôn)**
+  → tham chiếu tới: **Điều 5 (các trường hợp cấm kết hôn)**  
 
-  Nội dung:
-  Nam, nữ kết hôn với nhau phải tuân theo các điều kiện sau đây:
-  trường hợp cấm kết hôn theo quy định tại các điểm a, b, c và d khoản 2 **Điều 5** của Luật này
+  Nội dung:  
+  *Nam, nữ kết hôn với nhau phải tuân theo các điều kiện sau đây...*  
+  *trường hợp cấm kết hôn theo quy định tại các điểm a, b, c và d khoản 2 Điều 5 của Luật này*
+
 - Truy vấn người dùng thường mơ hồ hoặc thiếu ngữ cảnh  
 
-Mục tiêu của dự án là xây dựng một pipeline RAG nhằm:
+- **Thách thức trong việc xây dựng prompt cho LLM:**  
+  - Cần kết hợp hiệu quả giữa **câu hỏi người dùng** và **ngữ cảnh truy xuất (retrieved context)**  
+  - Prompt không tốt có thể dẫn đến:
+    - LLM bỏ qua context (hallucination)  
+    - Trả lời thiếu chính xác hoặc không đầy đủ  
+    - Không khai thác được các liên kết điều luật  
+
+---
+
+##  Mục tiêu của dự án
+
+Xây dựng một pipeline RAG nhằm:
+
 - Truy xuất chính xác các điều luật liên quan  
 - Đảm bảo đầy đủ ngữ cảnh  
 - Sinh câu trả lời có độ tin cậy cao  
+- Thiết kế prompt tối ưu để LLM sử dụng hiệu quả thông tin truy xuất  
 
 ---
 
