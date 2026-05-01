@@ -22,7 +22,7 @@ from llm.rewrite import rewrite_query_llm
 from llm.analyze import analyze_context
 import warnings
 import time
-from cache_semantic import SemanticCache
+from cache.cache_semantic import SemanticCache
 from config import EMBED_MODEL,CACHE_PATH
 from config import *
 from langchain_community.embeddings import HuggingFaceEmbeddings
