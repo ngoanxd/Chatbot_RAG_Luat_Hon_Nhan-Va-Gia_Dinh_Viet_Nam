@@ -148,7 +148,6 @@ Các metric đề xuất:
 ## 8. Project Structure
 
 ```
-.
 ├── data/
 │   └── loader.py                 # Load dữ liệu (PDF, txt luật)
 │
