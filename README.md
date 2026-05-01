@@ -1,7 +1,13 @@
-<h1 align="center">LegalRAG Pipeline</h1>### Pipeline RAG cho hỏi đáp pháp luật với hybrid retrieval và cross-encoder reranking
+<h1 align="center">⚖️ LegalRAG Pipeline</h1>
 
-> Pipeline Retrieval-Augmented Generation đa giai đoạn cho bài toán hỏi đáp văn bản pháp luật, tối ưu hóa **recall** trong truy xuất và **precision** trong tái xếp hạng.
+<p align="center">
+  <b>Pipeline RAG cho hỏi đáp pháp luật với hybrid retrieval và cross-encoder reranking</b>
+</p>
 
+<p align="center">
+  Pipeline Retrieval-Augmented Generation đa giai đoạn cho bài toán hỏi đáp văn bản pháp luật,
+  tối ưu hóa <b>recall</b> trong truy xuất và <b>precision</b> trong tái xếp hạng.
+</p>
 ---
 
 ## 1. Problem Statement
