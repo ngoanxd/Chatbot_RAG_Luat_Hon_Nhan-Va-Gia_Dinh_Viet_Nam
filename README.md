@@ -8,13 +8,20 @@
   Pipeline Retrieval-Augmented Generation đa giai đoạn cho bài toán hỏi đáp văn bản pháp luật,
   tối ưu hóa <b>recall</b> trong truy xuất và <b>precision</b> trong tái xếp hạng.
 </p>
----
+
 
 ## 1. Problem Statement
 Bài toán hỏi đáp trong miền văn bản pháp luật gặp nhiều thách thức:
 
 - Ngôn ngữ mang tính hình thức và phức tạp  
-- Các điều khoản có liên kết chéo (cross-reference)  
+- Các điều khoản có liên kết chéo (cross-reference):
+
+  **Điều 8. Điều kiện kết hôn**  
+  → tham chiếu tới: **Điều 5 (các trường hợp cấm kết hôn)**
+
+  Nội dung:
+  Nam, nữ kết hôn với nhau phải tuân theo các điều kiện sau đây:
+  trường hợp cấm kết hôn theo quy định tại các điểm a, b, c và d khoản 2 **Điều 5** của Luật này
 - Truy vấn người dùng thường mơ hồ hoặc thiếu ngữ cảnh  
 
 Mục tiêu của dự án là xây dựng một pipeline RAG nhằm:
