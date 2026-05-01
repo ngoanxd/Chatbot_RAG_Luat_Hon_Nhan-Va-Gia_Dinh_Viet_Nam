@@ -266,19 +266,4 @@ Phù hợp cho bài toán hỏi đáp trong miền pháp luật.
 <img src="https://github.com/user-attachments/assets/2e5e0b9e-33d3-4f9e-8faf-cb441624fd05" width="400"/>
 
 ---
-## Đóng góp (Contribution)
-
-Mọi đóng góp cho dự án đều được chào đón! Để bắt đầu, bạn có thể:
-1. **Fork** dự án này.
-2. Tạo một **Branch** mới cho tính năng của bạn.
-3. Gửi một **Pull Request** kèm theo mô tả chi tiết.
-
-### Contributors:
-- **[Tên/Nickname của bạn]** - (Vai trò: Developer/Documentation)
-- Và các thành viên khác trong cộng đồng.
-
----
-*Dự án được thực hiện với mục đích hỗ trợ tra cứu pháp luật cộng đồng.*
-
----
 
