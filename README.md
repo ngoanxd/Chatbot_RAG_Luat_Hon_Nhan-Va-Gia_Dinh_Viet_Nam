@@ -187,13 +187,32 @@ Các metric đề xuất:
 
 ## 9. How to Run
 
+```
+### Cách 1: Chạy trên Google Colab (Khuyến khích)
+
+Mô hình sử dụng **LLM local Qwen 3** yêu cầu khoảng **~5.2GB VRAM**, nên nhiều máy cá nhân có thể không đáp ứng được.
+
+ Vì vậy, **khuyến khích chạy trên Google Colab** để đảm bảo hoạt động ổn định.
+
+Mở file:
+```
+  guide_run.ipynb
+  
+```
+và chạy lần lượt từng cell.
+
+---
+
+###  Cách 2: Chạy trên máy local (terminal)
+
+Nếu máy bạn có GPU đủ mạnh (VRAM ≥ 6GB), bạn có thể chạy:
+
 ```bash
 git clone <repo>
 cd project
 pip install -r requirements.txt
 python main.py
 
-All in:(guide_run.ipynb) google colab 
 ```
 
 ---
