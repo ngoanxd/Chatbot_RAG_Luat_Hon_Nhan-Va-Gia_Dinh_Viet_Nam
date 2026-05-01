@@ -161,7 +161,7 @@ Các metric đề xuất:
 
 ```
 ├── data/
-│   └── loader.py               # Load dữ liệu (PDF, txt luật)
+│   └── loader.py               # Load dữ liệu ( txt luật)
 │   └── luat_hon_nhan           # Data
 │
 ├── retriever/                   # Truy xuất (BM25, FAISS)
