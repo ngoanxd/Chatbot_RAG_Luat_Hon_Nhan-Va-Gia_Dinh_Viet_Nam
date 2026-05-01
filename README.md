@@ -149,7 +149,6 @@ Các metric đề xuất:
 
 ```
 .
-.
 ├── data/
 │   └── loader.py                 # Load dữ liệu (PDF, txt luật)
 │
@@ -214,8 +213,7 @@ Thông qua việc kết hợp:
 
 Phù hợp cho bài toán hỏi đáp trong miền pháp luật.
 
-<img width="1024" height="1536" alt="image" src="https://github.com/user-attachments/assets/2e5e0b9e-33d3-4f9e-8faf-cb441624fd05" />
-
+<img src="https://github.com/user-attachments/assets/2e5e0b9e-33d3-4f9e-8faf-cb441624fd05" width="400"/>
 
 
 
