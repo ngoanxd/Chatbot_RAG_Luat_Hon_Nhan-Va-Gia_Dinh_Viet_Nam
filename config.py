@@ -12,4 +12,4 @@ RERANK_MODEL = "BAAI/bge-reranker-v2-m3"
 LLM_MODEL = "qwen3"
 
 FAISS_PATH =  r"/content/drive/MyDrive/CHAT_RAG_LUAT_HON_NHAN/faiss_store"
-CACHE_PATH = r"/content/drive/MyDrive/CHAT_RAG_LUAT_HON_NHAN/cache_semantic.json"
+CACHE_PATH = r"/content/drive/MyDrive/CHAT_RAG_LUAT_HON_NHAN/cache/cache_semantic.json"
