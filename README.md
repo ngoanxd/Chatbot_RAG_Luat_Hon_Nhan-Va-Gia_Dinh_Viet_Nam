@@ -161,14 +161,14 @@ Các metric đề xuất:
 
 ```
 ├── data/
-│   └── loader.py                 # Load dữ liệu (PDF, txt luật)
+│   └── loader.py               # Load dữ liệu (PDF, txt luật)
+│   └── luat_hon_nhan           # Data
 │
 ├── retriever/                   # Truy xuất (BM25, FAISS)
 │   ├── bm25.py
 │   ├── faiss_db.py
 │   └── hybrid_search.py
-│
-├── luat_hon_nhan/               # Dữ liệu luật
+│          
 │
 ├── cache/                       # Semantic cache
 │   ├── cache_semantic.py
