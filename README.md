@@ -145,13 +145,29 @@ Nhận xét:
 
 ---
 
-## 5. Evaluation (Suggested)
+## 5. System Evaluation
 
-Các metric đề xuất:
+Hệ thống được đánh giá toàn diện từ khâu truy xuất tài liệu (Retrieval) đến khâu sinh văn bản (Generation) để đảm bảo tính chính xác và an toàn pháp lý.
 
-- Recall@K  
-- Mean Reciprocal Rank (MRR)  
-- Latency  
+### 5.1 Hiệu năng truy xuất (Retrieval Performance)
+Sử dụng các chỉ số `@K` để đo lường khả năng tìm thấy các điều luật đúng trong Top K kết quả trả về:
+
+| Metric | Ý nghĩa trong bài toán Pháp luật |
+| :--- | :--- |
+| **Recall@K** | Tỷ lệ các điều luật mục tiêu được tìm thấy trong Top K. Đảm bảo hệ thống không "bỏ sót" căn cứ pháp lý quan trọng. |
+| **Precision@K** | Tỷ lệ thông tin hữu ích trong Top K. Giúp giảm nhiễu (noise) cho mô hình Generator, hạn chế tình trạng quá tải ngữ cảnh. |
+| **MRR** | Đánh giá vị trí của điều luật đúng nhất. Điều luật đúng càng nằm ở top đầu, điểm MRR càng cao. |
+
+### 5.2 Chất lượng sinh văn bản (Generation Quality)
+Kết hợp đo lường tự động và đánh giá chuyên gia dựa trên LLM:
+
+* **BERTScore:** Sử dụng mô hình `xlm-roberta-base` để đo độ tương đồng ngữ nghĩa giữa câu trả lời và đáp án chuẩn.
+* **LLM-as-a-Judge (Cross-Evaluation):** Sử dụng **GPT-4o** và **Llama-3.3-70B** để chấm điểm theo Rubric (1-5):
+    * **5 điểm:** Hoàn hảo, viện dẫn chính xác Điều/Khoản.
+    * **4 điểm:** Đúng bản chất pháp lý, an toàn nhưng diễn đạt chưa tối ưu.
+    * **1-2 điểm:** Sai luật, bịa luật hoặc gặp lỗi **Contextual Hallucination**.
+
+**Phân tích sâu:** Việc theo dõi **Recall@K** ở giai đoạn Retrieval giúp tinh chỉnh trọng số của Hybrid Search, trong khi **LLM-as-a-Judge** giúp kiểm soát rủi ro pháp lý mà các độ đo truyền thống không thể nhận diện.
 
 ---
 
