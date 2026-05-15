@@ -31,7 +31,7 @@ import time
 from cache.cache_semantic import SemanticCache
 from config import EMBED_MODEL,CACHE_PATH
 from config import *
-from langchain_community.embeddings import HuggingFaceEmbeddings
+from langchain_huggingface import HuggingFaceEmbeddings
 
 llm = get_llm()
 
@@ -136,7 +136,7 @@ def main():
             answer = llm.invoke(f"""
             -Bạn là chatbot tư vấn pháp luật và cần độ chính xác cao, dựa vào context hãy trả lời query (câu hỏi) phía dưới.
             hãy suy luận thật kỹ context và query để trả lời cho chính xác.
-            -Chỉ trả lời Tiếng Việt Nam, NGẮN GỌN và đúng trọng tâm và không suy diễn.
+            -Chỉ trả lời Tiếng Việt, NGẮN GỌN và đúng trọng tâm và không suy diễn.
 
             Context:
             {context}
