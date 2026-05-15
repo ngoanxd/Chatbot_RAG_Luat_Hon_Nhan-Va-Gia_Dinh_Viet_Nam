@@ -2,8 +2,10 @@ import re
 from sentence_transformers import CrossEncoder
 from config import *
 from llm.rewrite import rewrite_query_llm
-from llm.model import llm
+from llm.model import get_llm
 import torch
+
+llm = get_llm()
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
 print(f"Device hybird {device}")
